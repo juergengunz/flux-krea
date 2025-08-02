@@ -1,0 +1,38 @@
+# Cog-specific files (not needed for RunPod)
+cog.yaml
+
+# Development and testing files
+test_*.py
+test_output_*.webp
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+env.bak/
+venv.bak/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker development files
+docker-compose.yml
+.dockerignore
+
+# Logs
+*.log 
