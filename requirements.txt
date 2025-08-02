@@ -9,6 +9,7 @@ torchvision==0.19.1
 diffusers @ git+https://github.com/huggingface/diffusers.git@249a9e48e8f8aac4356d5a285c8ba0c600a80f64
 transformers==4.44.0
 accelerate==0.33.0
+sentencepiece==0.2.0
 
 # Image processing
 Pillow>=10.0.0
