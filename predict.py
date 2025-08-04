@@ -18,7 +18,6 @@ from diffusers import (
 )
 from torchvision import transforms
 from weights import WeightsDownloadCache
-from lora_loading_patch import load_lora_into_transformer
 
 MAX_IMAGE_SIZE = 1440
 MODEL_CACHE = "black-forest-labs/FLUX.1-Krea-dev"
@@ -71,9 +70,6 @@ def initialize_models():
         MODEL_CACHE,
         torch_dtype=torch.bfloat16
     ).to("cuda")
-    txt2img_pipe.__class__.load_lora_into_transformer = classmethod(
-        load_lora_into_transformer
-    )
 
     print("Loading Flux img2img pipeline")
     img2img_pipe = FluxImg2ImgPipeline(
@@ -85,9 +81,6 @@ def initialize_models():
         tokenizer=txt2img_pipe.tokenizer,
         tokenizer_2=txt2img_pipe.tokenizer_2,
     ).to("cuda")
-    img2img_pipe.__class__.load_lora_into_transformer = classmethod(
-        load_lora_into_transformer
-    )
 
     print("Model initialization took: ", time.time() - start)
 
