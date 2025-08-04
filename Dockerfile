@@ -1,6 +1,6 @@
 # Use the official PyTorch base image to ensure CUDA compatibility and avoid image resolution errors.
 # This image comes with PyTorch, CUDA 12.1, and cuDNN pre-installed.
-FROM nvcr.io/nvidia/pytorch:24.05-py3
+FROM nvidia/cuda:12.4.0-cudnn8-devel-ubuntu22.04
 
 
 # Set environment variables
