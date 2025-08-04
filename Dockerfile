@@ -29,9 +29,10 @@ RUN wget https://github.com/replicate/pget/releases/download/v0.8.2/pget_linux_x
 WORKDIR /app
 
 # Copy requirements and install Python dependencies
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt --index-url https://download.pytorch.org/whl/cu124
+    pip install --no-cache-dir -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
 
 # Copy the rest of the application
 COPY . .
