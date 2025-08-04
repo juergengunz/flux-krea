@@ -1,6 +1,6 @@
 # Use the official PyTorch base image to ensure CUDA compatibility and avoid image resolution errors.
 # This image comes with PyTorch, CUDA 12.1, and cuDNN pre-installed.
-FROM pytorch/pytorch:2.3.0-cuda12.1-cudnn8-devel
+FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn8-devel
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
