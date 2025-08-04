@@ -1,5 +1,5 @@
 # Core RunPod dependency
-runpod>=1.6.0
+runpod~=1.7.0
 
 # PyTorch (wird via --index-url als CUDA-Build installiert)
 torch==2.4.1
