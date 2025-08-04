@@ -1,7 +1,7 @@
 # Core RunPod dependency
 runpod>=1.6.0
 
-# PyTorch
+# PyTorch (wird via --index-url als CUDA-Build installiert)
 torch==2.4.1
 torchvision==0.19.1
 
@@ -29,4 +29,4 @@ peft==0.13.0
 safetensors>=0.4.0
 
 # Optional but recommended for performance
-xformers>=0.0.20 
+xformers>=0.0.20
