@@ -1,5 +1,5 @@
 # CUDA 12.4 Base-Image (cuDNN nicht als Tag verfügbar)
-FROM nvidia/cuda:12.4.0-devel-ubuntu22.04
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
