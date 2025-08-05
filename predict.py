@@ -18,6 +18,7 @@ from diffusers import (
 )
 from torchvision import transforms
 from weights import WeightsDownloadCache
+from transformers import CLIPImageProcessor
 import numpy as np
 
 MAX_IMAGE_SIZE = 1440
@@ -52,10 +53,11 @@ txt2img_pipe = None
 img2img_pipe = None
 weights_cache = None
 last_loaded_lora = None
+feature_extractor = None
 
 def initialize_models():
     """Initialize models globally for efficiency"""
-    global txt2img_pipe, img2img_pipe, weights_cache, last_loaded_lora
+    global txt2img_pipe, img2img_pipe, weights_cache, last_loaded_lora, feature_extractor
     
     if txt2img_pipe is not None:
         return
@@ -65,6 +67,10 @@ def initialize_models():
     
     weights_cache = WeightsDownloadCache()
     last_loaded_lora = None
+    
+    # Initialize CLIPImageProcessor like Cog does
+    print("Loading CLIP feature extractor...")
+    feature_extractor = CLIPImageProcessor.from_pretrained("./feature-extractor")
     
     print("Loading Flux txt2img Pipeline")
     dtype = torch.bfloat16
