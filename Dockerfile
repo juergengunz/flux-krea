@@ -42,7 +42,7 @@ WORKDIR /app
 # Copy requirements and install Python dependencies
 COPY requirements.txt .
 
-# Install Python dependencies (remove redundant --extra-index-url since it's in requirements.txt)
+# Install Python dependencies (using standard PyPI builds to match Cog)
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 

@@ -18,9 +18,10 @@ from diffusers import (
 )
 from torchvision import transforms
 from weights import WeightsDownloadCache
+import numpy as np
 
 MAX_IMAGE_SIZE = 1440
-MODEL_CACHE = "black-forest-labs/FLUX.1-Krea-dev"
+MODEL_CACHE = "FLUX.1-Krea-dev"
 
 ASPECT_RATIOS = {
     "1:1": (1024, 1024),
@@ -66,10 +67,11 @@ def initialize_models():
     last_loaded_lora = None
     
     print("Loading Flux txt2img Pipeline")
+    dtype = torch.bfloat16
     txt2img_pipe = FluxPipeline.from_pretrained(
-        MODEL_CACHE,
-        torch_dtype=torch.bfloat16,
-        cache_dir="FLUX.1-Krea-dev"
+        "black-forest-labs/FLUX.1-Krea-dev",
+        torch_dtype=dtype,
+        cache_dir=MODEL_CACHE
     ).to("cuda")
 
     print("Loading Flux img2img pipeline")
