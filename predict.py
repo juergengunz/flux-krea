@@ -68,7 +68,8 @@ def initialize_models():
     print("Loading Flux txt2img Pipeline")
     txt2img_pipe = FluxPipeline.from_pretrained(
         MODEL_CACHE,
-        torch_dtype=torch.bfloat16
+        torch_dtype=torch.bfloat16,
+        low_cpu_mem_usage=True
     ).to("cuda")
 
     print("Loading Flux img2img pipeline")
