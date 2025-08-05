@@ -1,20 +1,31 @@
-# CUDA 12.4 Base-Image (cuDNN nicht als Tag verfügbar)
+# CUDA 12.4 Base-Image with cuDNN for better tensor operations
 FROM nvidia/cuda:12.4.1-devel-ubuntu22.04
 
-# Set environment variables
+# Set environment variables for optimal GPU and memory usage
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV CUDA_VISIBLE_DEVICES=0
+ENV TORCH_CUDA_ARCH_LIST="7.0;7.5;8.0;8.6;8.9;9.0+PTX"
+ENV FORCE_CUDA=1
+ENV MAX_JOBS=4
 
-# Install system dependencies and Python
+# Install system dependencies and Python with additional libraries for better tensor handling
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
+    python3-dev \
     git \
     wget \
     curl \
     libgl1-mesa-glx \
     libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    libjpeg-dev \
+    libpng-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -29,16 +40,19 @@ RUN wget https://github.com/replicate/pget/releases/download/v0.8.2/pget_linux_x
 WORKDIR /app
 
 # Copy requirements and install Python dependencies
-# Install Python dependencies
 COPY requirements.txt .
+
+# Install Python dependencies (remove redundant --extra-index-url since it's in requirements.txt)
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
+    pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application
 COPY . .
 
-# Set Python path
+# Set Python path and additional environment variables for better GPU memory management
 ENV PYTHONPATH=/app
+ENV PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+ENV CUDA_LAUNCH_BLOCKING=0
 
 # Run your app
 CMD ["python", "predict.py"]

@@ -1,28 +1,29 @@
 # Core RunPod dependency
 runpod~=1.7.0
 
-# PyTorch (wird via --index-url als CUDA-Build installiert)
+# PyTorch (matching cog.yaml exactly)
+--extra-index-url https://download.pytorch.org/whl/cu124
 torch==2.4.1
 torchvision==0.19.1
 
-# Diffusers and Transformers
-diffusers==0.33.0
+# Diffusers and Transformers (matching cog.yaml exactly)
+diffusers==0.32.2
 transformers==4.44.0
 accelerate==0.33.0
 sentencepiece==0.2.0
 protobuf==5.27.3
 
-# Image processing
+# Image processing (matching cog.yaml)
 pillow==10.4.0
 
-# Other core dependencies
+# Other core dependencies (matching cog.yaml)
 numpy==1.26.0
 requests>=2.28.0
 
-# HuggingFace hub
-huggingface_hub>=0.19.0
+# HuggingFace hub (matching cog.yaml exactly)
+huggingface-hub==0.24.0
 
-# PEFT for LoRA support
+# PEFT for LoRA support (matching cog.yaml exactly)
 peft==0.13.0
 
 # SafeTensors for model loading
