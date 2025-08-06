@@ -12,9 +12,9 @@ ENV MAX_JOBS=4
 
 # Install system dependencies and Python with additional libraries for better tensor handling
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 \
+    python3.10 \
+    python3.10-dev \
     python3-pip \
-    python3-dev \
     git \
     wget \
     curl \
@@ -29,8 +29,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Make python3 default
-RUN ln -s /usr/bin/python3 /usr/bin/python
+# Make python3.10 default
+RUN ln -s /usr/bin/python3.10 /usr/bin/python
 
 # Install pget for fast downloads (used by RunPod)
 RUN wget https://github.com/replicate/pget/releases/download/v0.8.2/pget_linux_x86_64 -O /usr/local/bin/pget && \

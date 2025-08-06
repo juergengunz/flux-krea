@@ -77,7 +77,8 @@ def initialize_models():
     txt2img_pipe = FluxPipeline.from_pretrained(
         "black-forest-labs/FLUX.1-Krea-dev",
         torch_dtype=dtype,
-        cache_dir=MODEL_CACHE
+        cache_dir=MODEL_CACHE,
+        low_cpu_mem_usage=True
     ).to("cuda")
 
     print("Loading Flux img2img pipeline")
@@ -185,8 +186,8 @@ def generate_images(job_input: Dict[str, Any]) -> Dict[str, Any]:
     if output_quality < 0 or output_quality > 100:
         return {"error": "output_quality must be between 0 and 100"}
     
-    if lora_scale < 0 or lora_scale > 1:
-        return {"error": "lora_scale must be between 0 and 1"}
+    if lora_scale < 0 or lora_scale > 2:
+        return {"error": "lora_scale must be between 0 and 2"}
     
     if prompt_strength < 0 or prompt_strength > 1:
         return {"error": "prompt_strength must be between 0 and 1"}
