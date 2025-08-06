@@ -77,8 +77,7 @@ def initialize_models():
     txt2img_pipe = FluxPipeline.from_pretrained(
         "black-forest-labs/FLUX.1-Krea-dev",
         torch_dtype=dtype,
-        cache_dir=MODEL_CACHE,
-        low_cpu_mem_usage=True
+        cache_dir=MODEL_CACHE
     ).to("cuda")
 
     print("Loading Flux img2img pipeline")
