@@ -28,5 +28,3 @@ peft==0.13.0
 # SafeTensors for model loading
 safetensors==0.5.3
 
-# Optional but recommended for performance
-xformers>=0.0.20
