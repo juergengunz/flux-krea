@@ -22,7 +22,7 @@ from transformers import CLIPImageProcessor
 import numpy as np
 
 MAX_IMAGE_SIZE = 1440
-MODEL_CACHE = "FLUX.1-Krea-dev"
+MODEL_CACHE = "FLUX.1-dev"
 
 ASPECT_RATIOS = {
     "1:1": (1024, 1024),
@@ -68,18 +68,40 @@ def initialize_models():
     weights_cache = WeightsDownloadCache()
     last_loaded_lora = None
     
-    # Initialize CLIPImageProcessor like Cog does
+    # Initialize CLIP
     print("Loading CLIP feature extractor...")
     feature_extractor = CLIPImageProcessor.from_pretrained("./feature-extractor")
     
-    print("Loading Flux txt2img Pipeline")
+    print("Loading Flux txt2img Pipeline (base model)")
     dtype = torch.bfloat16
     txt2img_pipe = FluxPipeline.from_pretrained(
-        "black-forest-labs/FLUX.1-Krea-dev",
+        "black-forest-labs/FLUX.1-dev",   # ✅ correct base
         torch_dtype=dtype,
         cache_dir=MODEL_CACHE
     ).to("cuda")
 
+    # ✅ Load SRPO transformer weights
+    from safetensors.torch import load_file
+    custom_weights_path = "./srpo/diffusion_pytorch_model.safetensors"
+
+    if not os.path.exists(custom_weights_path):
+        os.makedirs("./srpo", exist_ok=True)
+        download_weights(
+            url="https://huggingface.co/tencent/SRPO/resolve/main/diffusion_pytorch_model.safetensors",
+            dest=custom_weights_path,
+            file=True
+        )
+    
+    print("Applying SRPO transformer weights...")
+    state_dict = load_file(custom_weights_path)
+    missing, unexpected = txt2img_pipe.transformer.load_state_dict(
+        state_dict,
+        strict=False
+    )
+    print("Missing keys:", missing)
+    print("Unexpected keys:", unexpected)
+
+    # ✅ Build img2img using the patched transformer
     print("Loading Flux img2img pipeline")
     img2img_pipe = FluxImg2ImgPipeline(
         transformer=txt2img_pipe.transformer,
