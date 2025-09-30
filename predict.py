@@ -80,6 +80,7 @@ def initialize_models():
         cache_dir=MODEL_CACHE
     ).to("cuda")
 
+
     # ✅ Load SRPO transformer weights
     from safetensors.torch import load_file
     custom_weights_path = "./srpo/diffusion_pytorch_model.safetensors"
