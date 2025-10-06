@@ -49,6 +49,7 @@ RUN pip install --upgrade pip && \
 # Copy the rest of the application
 COPY . .
 
+
 # Download SRPO model during build time to avoid downloading at runtime
 RUN mkdir -p /app/srpo && \
     pget https://huggingface.co/tencent/SRPO/resolve/main/diffusion_pytorch_model.safetensors \
