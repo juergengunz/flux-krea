@@ -49,6 +49,11 @@ RUN pip install --upgrade pip && \
 # Copy the rest of the application
 COPY . .
 
+# Download SRPO model during build time to avoid downloading at runtime
+RUN mkdir -p /app/srpo && \
+    pget https://huggingface.co/tencent/SRPO/resolve/main/diffusion_pytorch_model.safetensors \
+    /app/srpo/diffusion_pytorch_model.safetensors
+
 # Set Python path and additional environment variables for better GPU memory management
 ENV PYTHONPATH=/app
 ENV PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
